@@ -28,6 +28,9 @@
 import streamlit as st
 from dataclasses import dataclass
 from typing import Any, List
+
+import hashlib
+
 from web3 import Web3
 w3 = Web3(Web3.HTTPProvider('HTTP://127.0.0.1:7545'))
 ################################################################################
@@ -81,6 +84,8 @@ w3 = Web3(Web3.HTTPProvider('HTTP://127.0.0.1:7545'))
 #  and send_transaction
 # YOUR CODE HERE
 
+from crypto_wallet import generate_account, get_balance, send_transaction
+
 ################################################################################
 # Fintech Finder Candidate Information
 
@@ -130,11 +135,12 @@ st.sidebar.markdown("## Client Account Address and Ethernet Balance in Ether")
 
 # @TODO:
 #  Call the `generate_account` function and save it as the variable `account`
-# YOUR CODE HERE
+account = generate_account() 
 
 ##########################################
 
 # Write the client's Ethereum account address to the sidebar
+
 st.sidebar.write(account.address)
 
 ##########################################
@@ -147,6 +153,8 @@ st.sidebar.write(account.address)
 # Call `get_balance` function and pass it your account address
 # Write the returned ether balance to the sidebar
 # YOUR CODE HERE
+ether_balance = get_balance(w3, account.address)
+st.sidebar.write(ether_balance)
 
 ##########################################
 
@@ -238,10 +246,11 @@ st.sidebar.markdown("## Total Wage in Ether")
 # rate from the candidate database (`candidate_database[person][3]`) by the
 # value of the `hours` variable
 # YOUR CODE HERE
+wage = hourly_rate * hours 
 
 # @TODO
 # Write the `wage` calculation to the Streamlit sidebar
-# YOUR CODE HERE
+st.sidebar.write(wage)
 
 ##########################################
 # Step 2 - Part 2:
